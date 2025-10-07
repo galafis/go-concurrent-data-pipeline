@@ -1,0 +1,10 @@
+graph LR
+    PRODUCER[Producer] --> CHANNEL1[Channel 1]
+    CHANNEL1 --> WORKER1[Worker 1]
+    CHANNEL1 --> WORKER2[Worker 2]
+    CHANNEL1 --> WORKER3[Worker 3]
+    WORKER1 --> CHANNEL2[Channel 2]
+    WORKER2 --> CHANNEL2
+    WORKER3 --> CHANNEL2
+    CHANNEL2 --> CONSUMER[Consumer]
+
