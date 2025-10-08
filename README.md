@@ -1,9 +1,10 @@
 # Concurrent Data Pipeline with Go
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/GabrielDemetriosLafis/go-concurrent-data-pipeline)](https://goreportcard.com/report/github.com/GabrielDemetriosLafis/go-concurrent-data-pipeline)
 ![Go](https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white)
 ![JSON](https://img.shields.io/badge/Data%20Format-JSON-000000?style=for-the-badge&logo=json&logoColor=white)
 ![Mermaid](https://img.shields.io/badge/Diagrams-Mermaid-orange?style=for-the-badge&logo=mermaid&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)
 
 ---
 
@@ -89,7 +90,8 @@ The main objective of this project is to **provide practical examples, functiona
 
 ```
 go-concurrent-data-pipeline/
-├── src/           # Código fonte da pipeline de dados em Go (main.go)
+├── src/           # Contém o arquivo main.go, o ponto de entrada da aplicação.
+├── pkg/pipeline/  # Módulo Go contendo as implementações das etapas da pipeline (producer, validator, transformer, loader, errorHandler, metricsCollector).
 ├── config/        # Arquivos de configuração (a ser expandido)
 ├── data/          # Dados de exemplo para testes e simulações (a ser expandido)
 ├── images/        # Imagens e diagramas para o README e documentação
@@ -103,7 +105,7 @@ go-concurrent-data-pipeline/
 
 ## 🚀 Getting Started
 
-Para começar, clone o repositório e explore os diretórios `src/` e `docs/` para exemplos detalhados e instruções de uso. Certifique-se de ter o Go instalado em sua máquina.
+Para começar, clone o repositório e explore os diretórios `src/` e `pkg/pipeline/` para exemplos detalhados e instruções de uso. Certifique-se de ter o Go instalado em sua máquina.
 
 ### Pré-requisitos
 
@@ -122,7 +124,7 @@ go test ./...
 
 ### Exemplo de Uso Avançado (Go)
 
-O exemplo abaixo demonstra a execução da pipeline de dados concorrente, incluindo a geração de registros, validação, transformação (com detecção de anomalias), carregamento para arquivos de saída e tratamento de erros. Um `metricsCollector` sumariza o desempenho da pipeline, fornecendo uma visão completa do fluxo de dados.
+O exemplo abaixo demonstra a execução da pipeline de dados concorrente, utilizando o módulo `pkg/pipeline` para orquestrar as etapas de geração de registros, validação, transformação (com detecção de anomalias), carregamento para arquivos de saída e tratamento de erros. Um `metricsCollector` sumariza o desempenho da pipeline, fornecendo uma visão completa do fluxo de dados.
 
 ```go
 package main
@@ -131,7 +133,7 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"time"
+	"go-concurrent-data-pipeline/pkg/pipeline"
 )
 
 func main() {
@@ -146,7 +148,7 @@ func main() {
 
 	// Executar a pipeline com 50 registros e 3 workers para validação/transformação
 	// Os logs detalhados serão exibidos no console e as métricas no final.
-	RunAdvancedPipeline(50, 3)
+	pipeline.RunAdvancedPipeline(50, 3)
 
 	fmt.Println("===========================================")
 	fmt.Println("Pipeline completed!")
@@ -186,3 +188,4 @@ Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICE
 ---
 
 **Autor:** Gabriel Demetrios Lafis  \n**Ano:** 2025
+

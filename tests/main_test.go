@@ -1,12 +1,15 @@
-package main
+package tests
 
 import (
 	"encoding/json"
 	"io/ioutil"
+	"math/rand"
 	"os"
 	"strings"
 	"testing"
 	"time"
+
+	"go-concurrent-data-pipeline/pkg/pipeline"
 )
 
 // captureOutput é uma função auxiliar para capturar a saída do console.
@@ -30,7 +33,7 @@ func TestRunAdvancedPipeline(t *testing.T) {
 	numWorkers := 3
 
 	output := captureOutput(func() {
-		RunAdvancedPipeline(numRecords, numWorkers)
+		pipeline.RunAdvancedPipeline(numRecords, numWorkers)
 	})
 
 	// Verificar se os arquivos de saída foram criados
@@ -66,7 +69,8 @@ func TestRunAdvancedPipeline(t *testing.T) {
 		t.Errorf("Sumário da pipeline não encontrado na saída.\nOutput:\n%s", output)
 	}
 
-	expectedProcessed := numRecords - (numRecords/7) - (numRecords/11) // Aproximado, pois alguns podem falhar em ambas as etapas
+	// A lógica de contagem de registros falhos pode ser mais complexa devido à simulação de erros.
+	// Para este teste, vamos apenas garantir que o total de registros processados + falhos seja igual ao número de registros produzidos.
 	if processedCount+failedCount != numRecords {
 		t.Errorf("Total de registros processados (%d) + falhados (%d) não é igual ao total produzido (%d). Output: %s", processedCount, failedCount, numRecords, output)
 	}
@@ -75,7 +79,7 @@ func TestRunAdvancedPipeline(t *testing.T) {
 	anomalyFound := false
 	for _, line := range processedLines {
 		if line == "" { continue }
-		var record ProcessedRecord
+		var record pipeline.ProcessedRecord
 		err := json.Unmarshal([]byte(line), &record)
 		if err != nil {
 			t.Errorf("Erro ao deserializar registro processado: %v", err)
@@ -94,7 +98,7 @@ func TestRunAdvancedPipeline(t *testing.T) {
 	errorRecordFound := false
 	for _, line := range failedLines {
 		if line == "" { continue }
-		var record DataRecord
+		var record pipeline.DataRecord
 		err := json.Unmarshal([]byte(line), &record)
 		if err != nil {
 			t.Errorf("Erro ao deserializar registro falhado: %v", err)
@@ -121,7 +125,7 @@ func TestRunAdvancedPipeline(t *testing.T) {
 
 func TestMain(m *testing.M) {
 	// Configurar o gerador de números aleatórios para resultados reproduzíveis nos testes
-	rand.Seed(1)
+	rand.Seed(time.Now().UnixNano())
 
 	// Executar os testes
 	exitCode := m.Run()
