@@ -28,13 +28,7 @@ O principal objetivo deste projeto é **fornecer exemplos práticos, código fun
 - **Testes Incluídos**: Módulos de código validados através de testes unitários e de integração, garantindo a robustez e a confiabilidade das implementações.
 - **Abordagem Didática**: Conteúdo apresentado de forma didática, ideal para aprendizado e referência, com explicações claras sobre os conceitos e a aplicação prática.
 
-### 📊 Visualização
 
-![Go Concurrent Data Pipeline](images/go_concurrent_data_pipeline.png)
-
-*Diagrama ilustrativo da arquitetura da pipeline de dados concorrente em Go, destacando os estágios de processamento e a comunicação entre eles.*
-
----
 
 ## 🇬🇧 Concurrent Data Pipeline with Go
 
