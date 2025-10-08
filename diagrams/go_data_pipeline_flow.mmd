@@ -1,0 +1,20 @@
+graph TD
+    subgraph Go Concurrent Data Pipeline
+        A[Data Source] --> B(Data Ingestion)
+        B --> C{Data Validation}
+        C --> D[Data Transformation]
+        D --> E[Data Enrichment]
+        E --> F[Data Sink]
+        F --> G[Metrics Collector]
+        C -- Invalid Data --> H[Error Handler]
+    end
+
+    style A fill:#afa,stroke:#333,stroke-width:2px
+    style B fill:#f9f,stroke:#333,stroke-width:2px
+    style C fill:#bbf,stroke:#333,stroke-width:2px
+    style D fill:#ccf,stroke:#333,stroke-width:2px
+    style E fill:#ffc,stroke:#333,stroke-width:2px
+    style F fill:#afa,stroke:#333,stroke-width:2px
+    style G fill:#f9f,stroke:#333,stroke-width:2px
+    style H fill:#bbf,stroke:#333,stroke-width:2px
+
