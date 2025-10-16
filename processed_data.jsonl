@@ -1,0 +1,3 @@
+{"id":"rec-0001","timestamp":"2025-10-16T01:37:32.888308092Z","sensor_id":"","value":94.00118741505943,"unit":"unit_A","location":"","status":"processed","processed_at":"2025-10-16T01:37:32.888343558Z","anomaly_score":9.400118741505944,"is_anomaly":true}
+{"id":"rec-0003","timestamp":"2025-10-16T01:37:32.911138228Z","sensor_id":"","value":25.261924826277365,"unit":"unit_A","location":"","status":"processed","processed_at":"2025-10-16T01:37:32.911174788Z","anomaly_score":2.526192482627737,"is_anomaly":false}
+{"id":"rec-0005","timestamp":"2025-10-16T01:37:32.974159209Z","sensor_id":"","value":75.6776046101935,"unit":"unit_A","location":"","status":"processed","processed_at":"2025-10-16T01:37:32.974199094Z","anomaly_score":7.5677604610193505,"is_anomaly":false}

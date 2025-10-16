@@ -1,7 +1,0 @@
-{"id":"rec-0000","timestamp":"2025-10-08T07:43:30.370206939-04:00","sensor_id":"","value":-1,"unit":"INVALID_UNIT","location":"","status":"invalid","error":"Value out of expected range (0-1000)"}
-{"id":"rec-0010","timestamp":"2025-10-08T07:43:30.643284839-04:00","sensor_id":"","value":-1,"unit":"unit_A","location":"","status":"invalid","error":"Value out of expected range (0-1000)"}
-{"id":"rec-0020","timestamp":"2025-10-08T07:43:30.937065121-04:00","sensor_id":"","value":-1,"unit":"unit_A","location":"","status":"invalid","error":"Value out of expected range (0-1000)"}
-{"id":"rec-0030","timestamp":"2025-10-08T07:43:31.088847647-04:00","sensor_id":"","value":-1,"unit":"unit_A","location":"","status":"invalid","error":"Value out of expected range (0-1000)"}
-{"id":"rec-0033","timestamp":"2025-10-08T07:43:31.186653453-04:00","sensor_id":"","value":84.51400313924071,"unit":"INVALID_UNIT","location":"","status":"transformation_error","error":"Invalid unit for transformation"}
-{"id":"rec-0040","timestamp":"2025-10-08T07:43:31.323370341-04:00","sensor_id":"","value":-1,"unit":"unit_A","location":"","status":"invalid","error":"Value out of expected range (0-1000)"}
-{"id":"rec-0044","timestamp":"2025-10-08T07:43:31.387207796-04:00","sensor_id":"","value":71.2955439334506,"unit":"INVALID_UNIT","location":"","status":"transformation_error","error":"Invalid unit for transformation"}
