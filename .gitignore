@@ -1,0 +1,50 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool
+*.out
+coverage.html
+coverage.txt
+
+# Dependency directories
+vendor/
+
+# Go workspace file
+go.work
+
+# IDE specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Output files from pipeline
+processed_data.jsonl
+failed_data.jsonl
+
+# But allow sample data
+!data/*.jsonl
+
+# Log files
+logs/*.log
+logs/*.txt
+
+# But allow logs README
+!logs/README.md
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Build output
+bin/
+build/
+dist/

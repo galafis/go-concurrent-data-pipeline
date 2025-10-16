@@ -9,12 +9,18 @@ import (
 	"sync"
 )
 
-func RunAdvancedPipeline(numRecords int, numWorkers int) {
+func RunAdvancedPipeline(numRecords int, numWorkers int) Metrics {
 	// Canais para comunicação entre as etapas
 	dataCh := make(chan DataRecord, 100)       // Producer -> Validator
 	validCh := make(chan DataRecord, 100)      // Validator -> Transformer
-	processedCh := make(chan ProcessedRecord, 100) // Transformer -> Loader
-	errorCh := make(chan DataRecord, 100)      // Erros de Validator ou Transformer -> ErrorHandler
+	processedCh := make(chan ProcessedRecord, 100) // Transformer -> Fan-out
+	errorCh := make(chan DataRecord, 100)      // Erros de Validator ou Transformer -> Fan-out
+	
+	// Canais dedicados para cada consumidor
+	loaderCh := make(chan ProcessedRecord, 100)
+	errorHandlerCh := make(chan DataRecord, 100)
+	metricsProcessedCh := make(chan ProcessedRecord, 100)
+	metricsErrorCh := make(chan DataRecord, 100)
 
 	var wg sync.WaitGroup // Main WaitGroup for all goroutines
 
@@ -73,29 +79,56 @@ func RunAdvancedPipeline(numRecords int, numWorkers int) {
 		errorWg.Wait()
 		close(errorCh)
 	}()
+	
+	// Fan-out para processedCh - distribui para Loader e MetricsCollector
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		defer close(loaderCh)
+		defer close(metricsProcessedCh)
+		for record := range processedCh {
+			loaderCh <- record
+			metricsProcessedCh <- record
+		}
+	}()
+	
+	// Fan-out para errorCh - distribui para ErrorHandler e MetricsCollector
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		defer close(errorHandlerCh)
+		defer close(metricsErrorCh)
+		for record := range errorCh {
+			errorHandlerCh <- record
+			metricsErrorCh <- record
+		}
+	}()
 
 	// 4. Loader
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		Loader(processedCh)
+		Loader(loaderCh)
 	}()
 
 	// 5. Error Handler
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		ErrorHandler(errorCh)
+		ErrorHandler(errorHandlerCh)
 	}()
 
 	// 6. Metrics Collector
+	var metrics Metrics
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		MetricsCollector(processedCh, errorCh)
+		metrics = MetricsCollector(metricsProcessedCh, metricsErrorCh)
 	}()
 
 	wg.Wait() // Espera todas as etapas da pipeline serem concluídas
 	log.Println("Pipeline completed!")
+	return metrics
 }
+
 

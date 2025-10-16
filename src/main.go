@@ -23,10 +23,12 @@ func main() {
 
 	// Executar a pipeline com 50 registros e 3 workers para validação/transformação
 	// Os logs detalhados serão exibidos no console e as métricas no final.
-	pipeline.RunAdvancedPipeline(50, 3)
+	metrics := pipeline.RunAdvancedPipeline(50, 3)
 
 	fmt.Println("===========================================")
 	fmt.Println("Pipeline completed!")
+	fmt.Printf("Final Metrics: Processed=%d, Errors=%d, Anomalies=%d\n", 
+		metrics.ProcessedCount, metrics.ErrorCount, metrics.AnomalyCount)
 	fmt.Println("===========================================")
 
 	// Opcional: Ler os arquivos de saída para verificar o conteúdo

@@ -2,7 +2,7 @@ package tests
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"math/rand"
 	"os"
 	"strings"
@@ -19,7 +19,7 @@ func captureOutput(f func()) string {
 	os.Stdout = w
 	f()
 	w.Close()
-	out, _ := ioutil.ReadAll(r)
+	out, _ := io.ReadAll(r)
 	os.Stdout = oldStdout
 	return string(out)
 }
@@ -32,9 +32,7 @@ func TestRunAdvancedPipeline(t *testing.T) {
 	numRecords := 50
 	numWorkers := 3
 
-	output := captureOutput(func() {
-		pipeline.RunAdvancedPipeline(numRecords, numWorkers)
-	})
+	metrics := pipeline.RunAdvancedPipeline(numRecords, numWorkers)
 
 	// Verificar se os arquivos de saída foram criados
 	processedFile, err := os.Open("processed_data.jsonl")
@@ -50,29 +48,35 @@ func TestRunAdvancedPipeline(t *testing.T) {
 	defer failedFile.Close()
 
 	// Contar linhas nos arquivos de saída
-	processedContent, _ := ioutil.ReadAll(processedFile)
+	processedContent, _ := io.ReadAll(processedFile)
 	processedLines := strings.Split(strings.TrimSpace(string(processedContent)), "\n")
 	processedCount := 0
 	if len(processedLines) > 0 && processedLines[0] != "" {
 		processedCount = len(processedLines)
 	}
 
-	failedContent, _ := ioutil.ReadAll(failedFile)
+	failedContent, _ := io.ReadAll(failedFile)
 	failedLines := strings.Split(strings.TrimSpace(string(failedContent)), "\n")
 	failedCount := 0
 	if len(failedLines) > 0 && failedLines[0] != "" {
 		failedCount = len(failedLines)
 	}
 
-	// Verificar o sumário de métricas na saída do console
-	if !strings.Contains(output, "--- Sumário da Pipeline ---") {
-		t.Errorf("Sumário da pipeline não encontrado na saída.\nOutput:\n%s", output)
+	// Verificar as métricas retornadas
+	if metrics.ProcessedCount != processedCount {
+		t.Errorf("Contagem de métricas processadas (%d) não corresponde ao arquivo (%d)", 
+			metrics.ProcessedCount, processedCount)
 	}
 
-	// A lógica de contagem de registros falhos pode ser mais complexa devido à simulação de erros.
-	// Para este teste, vamos apenas garantir que o total de registros processados + falhos seja igual ao número de registros produzidos.
+	if metrics.ErrorCount != failedCount {
+		t.Errorf("Contagem de métricas de erro (%d) não corresponde ao arquivo (%d)", 
+			metrics.ErrorCount, failedCount)
+	}
+
+	// A lógica de contagem de registros: todos os registros devem ser processados ou ter falhado
 	if processedCount+failedCount != numRecords {
-		t.Errorf("Total de registros processados (%d) + falhados (%d) não é igual ao total produzido (%d). Output: %s", processedCount, failedCount, numRecords, output)
+		t.Errorf("Total de registros processados (%d) + falhados (%d) não é igual ao total produzido (%d)", 
+			processedCount, failedCount, numRecords)
 	}
 
 	// Verificar se há registros anômalos no arquivo processado
@@ -113,9 +117,9 @@ func TestRunAdvancedPipeline(t *testing.T) {
 		t.Errorf("Nenhum registro com erro encontrado no arquivo failed_data.jsonl. Isso pode indicar um problema na lógica de erro ou nos dados de teste.")
 	}
 
-	// Verificar se a pipeline foi concluída com sucesso
-	if !strings.Contains(output, "Pipeline completed!") {
-		t.Errorf("Mensagem de conclusão da pipeline não encontrada.\nOutput:\n%s", output)
+	// Verificar se as métricas de anomalia são corretas
+	if metrics.AnomalyCount == 0 {
+		t.Errorf("Nenhuma anomalia detectada nas métricas, esperado pelo menos uma")
 	}
 
 	// Limpar arquivos de saída após o teste

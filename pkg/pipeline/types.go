@@ -28,3 +28,11 @@ type ProcessedRecord struct {
 	IsAnomaly    bool      `json:"is_anomaly"`
 }
 
+// Metrics representa as métricas coletadas da pipeline.
+type Metrics struct {
+	ProcessedCount int
+	ErrorCount     int
+	AnomalyCount   int
+	TotalValue     float64
+}
+
