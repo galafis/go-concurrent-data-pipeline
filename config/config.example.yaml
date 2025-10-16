@@ -1,0 +1,110 @@
+# Sample Configuration for Go Concurrent Data Pipeline
+
+# Pipeline Settings
+pipeline:
+  # Number of worker goroutines for validation and transformation stages
+  workers: 3
+  
+  # Number of records to generate (for demo purposes)
+  num_records: 100
+  
+  # Buffer size for channels
+  channel_buffer_size: 100
+
+# Data Generation Settings
+producer:
+  # Rate limiting (records per second, 0 for unlimited)
+  rate_limit: 0
+  
+  # Simulated locations
+  locations:
+    - North
+    - South
+    - East
+    - West
+    - Center
+  
+  # Number of simulated sensors
+  num_sensors: 5
+  
+  # Error injection rate (percentage of records with intentional errors)
+  error_injection_rate: 0.2
+
+# Validation Settings
+validator:
+  # Valid value range
+  min_value: 0
+  max_value: 1000
+  
+  # Required fields
+  required_fields:
+    - id
+    - value
+    - unit
+    - timestamp
+    - sensor_id
+    - location
+
+# Transformation Settings
+transformer:
+  # Anomaly detection threshold
+  anomaly_threshold: 8.0
+  
+  # Anomaly score multiplier
+  anomaly_score_multiplier: 0.1
+  
+  # Valid units
+  valid_units:
+    - unit_A
+    - unit_B
+    - unit_C
+
+# Output Settings
+output:
+  # Processed data output file
+  processed_file: "processed_data.jsonl"
+  
+  # Failed records output file
+  failed_file: "failed_data.jsonl"
+  
+  # Log file
+  log_file: "logs/pipeline.log"
+  
+  # Log level (DEBUG, INFO, WARN, ERROR)
+  log_level: "INFO"
+
+# Metrics Settings
+metrics:
+  # Enable metrics collection
+  enabled: true
+  
+  # Metrics export interval (seconds)
+  export_interval: 10
+  
+  # Prometheus metrics endpoint (if enabled)
+  prometheus_endpoint: ":9090/metrics"
+
+# Monitoring Settings
+monitoring:
+  # Enable health check endpoint
+  health_check_enabled: false
+  
+  # Health check endpoint address
+  health_check_address: ":8080/health"
+  
+  # Enable profiling
+  pprof_enabled: false
+  
+  # Profiling endpoint address
+  pprof_address: ":6060"
+
+# Advanced Settings
+advanced:
+  # Graceful shutdown timeout (seconds)
+  shutdown_timeout: 30
+  
+  # Enable backpressure handling
+  backpressure_enabled: true
+  
+  # Maximum memory usage (MB, 0 for unlimited)
+  max_memory_mb: 0
