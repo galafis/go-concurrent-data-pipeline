@@ -29,11 +29,16 @@ go.work
 # Output files from pipeline
 processed_data.jsonl
 failed_data.jsonl
-*.jsonl
+
+# But allow sample data
+!data/*.jsonl
 
 # Log files
-logs/
-*.log
+logs/*.log
+logs/*.txt
+
+# But allow logs README
+!logs/README.md
 
 # OS specific files
 .DS_Store

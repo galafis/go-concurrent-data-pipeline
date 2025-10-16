@@ -1,6 +1,6 @@
 # Concurrent Data Pipeline with Go
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/GabrielDemetriosLafis/go-concurrent-data-pipeline)](https://goreportcard.com/report/github.com/GabrielDemetriosLafis/go-concurrent-data-pipeline)
+[![Go Report Card](https://goreportcard.com/badge/github.com/galafis/go-concurrent-data-pipeline)](https://goreportcard.com/report/github.com/galafis/go-concurrent-data-pipeline)
 ![Go](https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white)
 ![JSON](https://img.shields.io/badge/Data%20Format-JSON-000000?style=for-the-badge&logo=json&logoColor=white)
 ![Mermaid](https://img.shields.io/badge/Diagrams-Mermaid-orange?style=for-the-badge&logo=mermaid&logoColor=white)
@@ -139,7 +139,7 @@ go-concurrent-data-pipeline/
 
 ```bash
 # Clone o repositório
-git clone https://github.com/GabrielDemetriosLafis/go-concurrent-data-pipeline.git
+git clone https://github.com/galafis/go-concurrent-data-pipeline.git
 cd go-concurrent-data-pipeline
 
 # Verifique a instalação do Go
@@ -309,7 +309,7 @@ Este projeto mantém alta qualidade de código através de:
 - ✅ **CI/CD** - GitHub Actions para testes automáticos
 - ✅ **Linting** - Análise estática de código com golangci-lint
 
-[![Tests](https://github.com/GabrielDemetriosLafis/go-concurrent-data-pipeline/actions/workflows/go-test.yml/badge.svg)](https://github.com/GabrielDemetriosLafis/go-concurrent-data-pipeline/actions/workflows/go-test.yml)
+[![Tests](https://github.com/galafis/go-concurrent-data-pipeline/actions/workflows/go-test.yml/badge.svg)](https://github.com/galafis/go-concurrent-data-pipeline/actions/workflows/go-test.yml)
 
 ---
 
@@ -405,7 +405,7 @@ copies or substantial portions of the Software.
 
 **Gabriel Demetrios Lafis**
 
-- GitHub: [@GabrielDemetriosLafis](https://github.com/GabrielDemetriosLafis)
+- GitHub: [@galafis](https://github.com/galafis)
 - LinkedIn: [Gabriel Demetrios Lafis](https://www.linkedin.com/in/gabriel-demetrios-lafis)
 
 ---
