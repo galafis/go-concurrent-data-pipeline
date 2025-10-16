@@ -12,18 +12,6 @@ import (
 	"go-concurrent-data-pipeline/pkg/pipeline"
 )
 
-// captureOutput é uma função auxiliar para capturar a saída do console.
-func captureOutput(f func()) string {
-	oldStdout := os.Stdout
-	r, w, _ := os.Pipe()
-	os.Stdout = w
-	f()
-	w.Close()
-	out, _ := io.ReadAll(r)
-	os.Stdout = oldStdout
-	return string(out)
-}
-
 func TestRunAdvancedPipeline(t *testing.T) {
 	// Limpar arquivos de saída antes do teste
 	_ = os.Remove("processed_data.jsonl")
@@ -39,13 +27,13 @@ func TestRunAdvancedPipeline(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Falha ao abrir processed_data.jsonl: %v", err)
 	}
-	defer processedFile.Close()
+	defer func() { _ = processedFile.Close() }()
 
 	failedFile, err := os.Open("failed_data.jsonl")
 	if err != nil {
 		t.Fatalf("Falha ao abrir failed_data.jsonl: %v", err)
 	}
-	defer failedFile.Close()
+	defer func() { _ = failedFile.Close() }()
 
 	// Contar linhas nos arquivos de saída
 	processedContent, _ := io.ReadAll(processedFile)

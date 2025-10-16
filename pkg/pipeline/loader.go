@@ -19,7 +19,7 @@ func Loader(in <-chan ProcessedRecord) {
 	if err != nil {
 		log.Fatalf("Loader: Falha ao criar arquivo de saída: %v", err)
 	}
-	defer file.Close()
+	defer func() { _ = file.Close() }()
 
 	for record := range in {
 		jsonBytes, err := json.Marshal(record)

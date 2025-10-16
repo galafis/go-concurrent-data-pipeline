@@ -18,7 +18,7 @@ func ErrorHandler(errorCh <-chan DataRecord) {
 	if err != nil {
 		log.Fatalf("ErrorHandler: Falha ao criar arquivo de erros: %v", err)
 	}
-	defer file.Close()
+	defer func() { _ = file.Close() }()
 
 	for record := range errorCh {
 		jsonBytes, err := json.Marshal(record)
