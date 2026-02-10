@@ -306,10 +306,7 @@ Este projeto mantém alta qualidade de código através de:
 - ✅ **Testes Unitários** - Cobertura de componentes individuais
 - ✅ **Testes de Integração** - Validação end-to-end da pipeline
 - ✅ **Benchmarks** - Medição de performance
-- ✅ **CI/CD** - GitHub Actions para testes automáticos
-- ✅ **Linting** - Análise estática de código com golangci-lint
-
-[![Tests](https://github.com/galafis/go-concurrent-data-pipeline/actions/workflows/go-test.yml/badge.svg)](https://github.com/galafis/go-concurrent-data-pipeline/actions/workflows/go-test.yml)
+- ✅ **Linting** — Análise estática de código com golangci-lint
 
 ---
 
