@@ -106,8 +106,7 @@ Closes #123
 ├── tests/            # Integration tests
 ├── docs/             # Documentation
 ├── data/             # Sample data
-├── config/           # Configuration files
-└── .github/          # GitHub Actions workflows
+└── config/           # Configuration files
 ```
 
 ## Testing Your Changes

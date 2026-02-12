@@ -17,11 +17,11 @@ Contains 10 sample data records in JSONL format. Each record has:
 
 ## Usage
 
-You can use these sample files to test the pipeline or as templates for your own data:
+These sample files serve as reference for the data format the pipeline produces internally:
 
 ```bash
-# Example: Process sample data
-go run src/main.go < data/sample_input.jsonl
+# Run the pipeline (it generates data programmatically)
+go run src/main.go
 ```
 
 ## Data Format

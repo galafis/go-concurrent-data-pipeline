@@ -206,11 +206,24 @@ func BenchmarkValidator(b *testing.B) {
 			close(dataCh)
 		}()
 		
-		go Validator(dataCh, validCh, errorCh)
+		go func() {
+			Validator(dataCh, validCh, errorCh)
+			close(validCh)
+			close(errorCh)
+		}()
 		
-		for range validCh {
-		}
-		for range errorCh {
-		}
+		done := make(chan bool, 2)
+		go func() {
+			for range validCh {
+			}
+			done <- true
+		}()
+		go func() {
+			for range errorCh {
+			}
+			done <- true
+		}()
+		<-done
+		<-done
 	}
 }

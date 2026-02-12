@@ -1,68 +1,48 @@
 # Concurrent Data Pipeline with Go
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/galafis/go-concurrent-data-pipeline)](https://goreportcard.com/report/github.com/galafis/go-concurrent-data-pipeline)
 ![Go](https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white)
 ![JSON](https://img.shields.io/badge/Data%20Format-JSON-000000?style=for-the-badge&logo=json&logoColor=white)
-![Mermaid](https://img.shields.io/badge/Diagrams-Mermaid-orange?style=for-the-badge&logo=mermaid&logoColor=white)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)
 
 ---
 
 ## 🇧🇷 Pipeline de Dados Concorrente com Go
 
-Este repositório apresenta uma **pipeline de dados de alta performance e concorrência desenvolvida em Go**, projetada para processar grandes volumes de dados de forma eficiente e escalável. O foco é em demonstrar como utilizar as capacidades de concorrência nativas do Go (goroutines e channels) para construir sistemas de processamento de dados robustos, tolerantes a falhas e com baixa latência. É ideal para **engenheiros de dados, desenvolvedores de backend e arquitetos de sistemas** que buscam soluções eficientes para ingestão, transformação e carregamento de dados em tempo real ou em lote.
+Uma pipeline de dados concorrente escrita em Go, usando goroutines e channels para processar registros em paralelo. O projeto demonstra validação, transformação, detecção de anomalias e persistência de dados em formato JSONL.
 
 ### 🎯 Objetivo
 
-O principal objetivo deste projeto é **fornecer exemplos práticos, código funcional e documentação detalhada** sobre a construção de pipelines de dados concorrentes com Go. Serão abordados tópicos como consumo de mensagens de filas (e.g., Kafka), processamento paralelo de dados, persistência em bancos de dados, tratamento de erros e monitoramento, tudo com foco em **performance, resiliência e manutenibilidade**, com ênfase em **validação de dados, transformações complexas, tratamento de erros e coleta de métricas**.
+Demonstrar a construção de uma pipeline de dados concorrente em Go, cobrindo validação de dados, transformações, tratamento de erros e coleta de métricas.
 
 ### ✨ Destaques
 
-- **Concorrência Nativa com Go**: Utilização de goroutines e channels para construir pipelines de dados altamente concorrentes e eficientes, permitindo o processamento paralelo de dados em várias etapas.
-- **Validação de Dados e Tratamento de Erros**: Implementação de uma etapa de validação (`validator`) que filtra dados inválidos e um `errorHandler` dedicado para persistir e gerenciar registros com falha, garantindo a integridade da pipeline.
-- **Transformações de Dados Complexas**: A etapa de `transformer` demonstra como aplicar lógica de negócios mais sofisticada, como cálculo de scores de anomalia, e lidar com diferentes tipos de erros de transformação.
-- **Coleta e Sumarização de Métricas**: Um `metricsCollector` dedicado para monitorar o fluxo de dados, contando registros processados, erros e anomalias, fornecendo um sumário abrangente da performance da pipeline.
-- **Persistência Flexível**: Os `loader` e `errorHandler` persistem os dados processados e com erro em arquivos JSONL, demonstrando uma abordagem flexível para armazenamento de resultados.
-- **Escalabilidade Horizontal**: O design da pipeline permite fácil escalabilidade, adicionando mais workers para as etapas de validação e transformação conforme a demanda.
-- **Código Profissional**: Exemplos de código bem estruturados, seguindo as melhores práticas da indústria, com foco em clareza, eficiência e documentação interna.
-- **Testes Incluídos**: Módulos de código validados através de testes unitários e de integração, garantindo a robustez e a confiabilidade das implementações.
-
-### 🚀 Benefícios do Go para Pipelines de Dados em Ação
-
-Go é uma linguagem poderosa e eficiente para a construção de pipelines de dados concorrentes e de alta performance. Este projeto ilustra como esses benefícios são explorados:
-
-1.  **Concorrência Simplificada e Eficaz:** Com goroutines e channels, Go torna a programação concorrente muito mais fácil e segura, permitindo a construção de um pipeline multi-estágio (producer, validator, transformer, loader, errorHandler, metricsCollector) onde cada etapa opera de forma independente e paralela.
-
-2.  **Performance Otimizada:** Compilado para código de máquina, Go oferece performance próxima à de C/C++, ideal para cargas de trabalho intensivas em CPU e I/O, como a geração, validação e transformação de milhões de registros de dados.
-
-3.  **Eficiência de Recursos:** Goroutines são leves e o scheduler do Go é otimizado para gerenciar milhares delas eficientemente, resultando em baixo consumo de memória e CPU, mesmo ao lidar com um grande número de registros e workers.
-
-4.  **Tratamento de Erros Robusto:** O modelo de tratamento de erros explícito de Go é fundamental para pipelines de dados, permitindo que a pipeline identifique e desvie registros inválidos ou com falha para um `errorHandler` dedicado, sem interromper o fluxo principal.
-
-5.  **Observabilidade Integrada:** A inclusão de um `metricsCollector` demonstra como é fácil integrar a coleta de métricas diretamente na pipeline, fornecendo insights em tempo real sobre o volume de dados, erros e anomalias.
-
-6.  **Modularidade e Manutenibilidade:** A estrutura baseada em funções e canais promove a modularidade, tornando cada etapa da pipeline um componente independente que pode ser facilmente testado, mantido e substituído.
+- **Concorrência com goroutines e channels**: Pipeline multi-estágio com producer, validator, transformer, loader, error handler e metrics collector rodando em paralelo.
+- **Validação de dados**: Filtragem de registros inválidos com roteamento para um error handler dedicado.
+- **Transformações com detecção de anomalias**: Cálculo de scores de anomalia e classificação de registros.
+- **Coleta de métricas**: Contagem de registros processados, erros e anomalias ao longo da execução.
+- **Persistência em JSONL**: Saída de registros processados e com falha em arquivos JSONL.
+- **Workers configuráveis**: Número de goroutines de validação e transformação ajustável.
+- **Testes unitários e de integração**: Cobertura das etapas individuais e da pipeline completa.
 
 ---
 
 ## 🇬🇧 Concurrent Data Pipeline with Go
 
-This repository presents a **high-performance and concurrent data pipeline developed in Go**, designed to process large volumes of data efficiently and scalably. The focus is on demonstrating how to use Go's native concurrency capabilities (goroutines and channels) to build robust, fault-tolerant, and low-latency data processing systems. It is ideal for **data engineers, backend developers, and system architects** seeking efficient solutions for real-time or batch data ingestion, transformation, and loading.
+A concurrent data pipeline written in Go, using goroutines and channels to process records in parallel. The project demonstrates validation, transformation, anomaly detection, and JSONL data persistence.
 
 ### 🎯 Objective
 
-The main objective of this project is to **provide practical examples, functional code, and detailed documentation** on building concurrent data pipelines with Go. Topics covered include consuming messages from queues (e.g., Kafka), parallel data processing, persistence in databases, error handling, and monitoring, all with a focus on **performance, resilience, and maintainability**, with an emphasis on **data validation, complex transformations, error handling, and metrics collection**.
+Show how to build a concurrent data pipeline in Go, covering data validation, transformations, error handling, and metrics collection.
 
 ### ✨ Highlights
 
-- **Native Concurrency with Go**: Utilization of goroutines and channels to build highly concurrent and efficient data pipelines, allowing parallel data processing at various stages.
-- **Data Validation and Error Handling**: Implementation of a validation stage (`validator`) that filters invalid data and a dedicated `errorHandler` to persist and manage failed records, ensuring pipeline integrity.
-- **Complex Data Transformations**: The `transformer` stage demonstrates how to apply more sophisticated business logic, such as anomaly score calculation, and handle different types of transformation errors.
-- **Metrics Collection and Summarization**: A dedicated `metricsCollector` to monitor data flow, counting processed records, errors, and anomalies, providing a comprehensive summary of pipeline performance.
-- **Flexible Persistence**: The `loader` and `errorHandler` persist processed and erroneous data into JSONL files, demonstrating a flexible approach to result storage.
-- **Horizontal Scalability**: The pipeline design allows for easy scalability, adding more workers for validation and transformation stages as demand increases.
-- **Professional Code**: Well-structured code examples, following industry best practices, with a focus on clarity, efficiency, and internal documentation.
-- **Tests Included**: Code modules validated through unit and integration tests, ensuring the robustness and reliability of the implementations.
+- **Concurrency with goroutines and channels**: Multi-stage pipeline with producer, validator, transformer, loader, error handler, and metrics collector running in parallel.
+- **Data validation**: Invalid record filtering with routing to a dedicated error handler.
+- **Transformations with anomaly detection**: Anomaly score calculation and record classification.
+- **Metrics collection**: Counts of processed records, errors, and anomalies throughout execution.
+- **JSONL persistence**: Output of processed and failed records to JSONL files.
+- **Configurable workers**: Adjustable number of validation and transformation goroutines.
+- **Unit and integration tests**: Coverage of individual stages and the full pipeline.
 
 ### 📊 Visualization
 
@@ -90,8 +70,6 @@ The main objective of this project is to **provide practical examples, functiona
 
 ```
 go-concurrent-data-pipeline/
-├── .github/
-│   └── workflows/     # GitHub Actions CI/CD workflows
 ├── src/               # Main application entry point (main.go)
 ├── pkg/pipeline/      # Core pipeline implementation modules
 │   ├── types.go       # Data structures and type definitions
@@ -109,13 +87,13 @@ go-concurrent-data-pipeline/
 │   ├── ARCHITECTURE.md # Detailed architecture documentation
 │   └── CONTRIBUTING.md # Contribution guidelines
 ├── config/            # Configuration files
-│   ├── config.example.yaml # Example configuration
-│   └── placeholder.txt
+│   └── config.example.yaml # Example configuration
 ├── data/              # Sample data files for testing
 │   ├── sample_input.jsonl # Example input data
 │   └── README.md
 ├── diagrams/          # Architecture diagrams
 │   ├── go_data_pipeline_flow.mmd # Mermaid diagram source
+│   ├── go_pipeline.mmd           # Simplified pipeline diagram
 │   └── go_data_pipeline_flow.png # Rendered diagram
 ├── images/            # Images for documentation
 ├── logs/              # Log files directory (gitignored)
@@ -301,28 +279,9 @@ Por favor, leia [CONTRIBUTING.md](docs/CONTRIBUTING.md) para detalhes sobre o pr
 
 ## 🧪 Testes e Qualidade
 
-Este projeto mantém alta qualidade de código através de:
-
-- ✅ **Testes Unitários** - Cobertura de componentes individuais
-- ✅ **Testes de Integração** - Validação end-to-end da pipeline
-- ✅ **Benchmarks** - Medição de performance
-- ✅ **Linting** — Análise estática de código com golangci-lint
-
----
-
-## 📊 Performance
-
-Resultados de benchmark em uma máquina com 8 cores:
-
-| Workers | Throughput (rec/s) | Latência Média (ms) |
-|---------|-------------------|---------------------|
-| 1       | ~50               | 20                  |
-| 2       | ~95               | 10.5                |
-| 3       | ~140              | 7.1                 |
-| 4       | ~180              | 5.5                 |
-| 8       | ~300              | 3.3                 |
-
-*Os resultados podem variar dependendo do hardware e da carga de trabalho.*
+- **Testes Unitários** — Cobertura dos componentes individuais da pipeline
+- **Testes de Integração** — Validação end-to-end da pipeline completa
+- **Benchmarks** — Benchmarks para Producer e Validator disponíveis em `pkg/pipeline/pipeline_test.go`
 
 ---
 
@@ -417,9 +376,5 @@ copies or substantial portions of the Software.
 
 ## 📈 Status do Projeto
 
-🟢 **Ativo e Mantido** - Issues e PRs são bem-vindos!
-
 **Última atualização:** Outubro 2025
-
-**Versão:** 1.0.0
 
